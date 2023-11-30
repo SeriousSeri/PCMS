@@ -7,7 +7,7 @@ def bandpass_filter(data, sample_rate, lowcut=18, highcut=22, order=5):
     sos = butter(order, [lowcut / (0.5 * sample_rate), highcut / (0.5 * sample_rate)], btype='band', output='sos')
     return sosfilt(sos, data)
 
-def detect_sweep_start(data, sample_rate, post_pilot_duration=50):
+def detect_sweep_start(data, sample_rate, post_pilot_duration=40):
     # Apply bandpass filter
     filtered_data = bandpass_filter(data, sample_rate)
 
@@ -51,7 +51,7 @@ def save_trimmed_audio(data, sample_rate, start_time, end_time, source_file, fil
     return left_output_path, right_output_path
 
 # Usage example
-source_audio_file = '1007-Basic-ADC_Track3.wav'  # Replace with your file path
+source_audio_file = 'TestStereoWave.wav'  # Replace with your file path
 sample_rate, data = wavfile.read(source_audio_file)
 mono_data = data.mean(axis=1) if data.ndim > 1 else data
 
